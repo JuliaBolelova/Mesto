@@ -1,0 +1,5 @@
+@import url(_invalid/error_invalid.css);
+
+.error-message {
+  display: none;
+}

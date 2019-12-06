@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css" />
+</head>
+
+<body>
+  <div class="root">
+    <header class="header root__section">
+      <img src="./images/logo.svg" alt="mesto logo" class="logo" />
+    </header>
+    <div class="profile root__section">
+      <div class="user-info">
+        <div class="user-info__photo"></div>
+        <div class="user-info__data">
+          <h1 class="user-info__name">Jaques Causteau</h1>
+          <p class="user-info__job">Sailor, Researcher</p>
+          <button class="button button_small user-info__button_small button_edit">
+            Edit
+          </button>
+        </div>
+        <button class="button button_big user-info__button button_pluse">
+          +
+        </button>
+      </div>
+    </div>
+    <div class="places-list root__section">
+      <!-- Карточки будут тут -->
+    </div>
+    <div class="popup popup-place">
+      <div class="popup__content">
+        <img src="./images/close.svg" alt="" class="popup__close popup__close_near" />
+        <h3 class="popup__title">Новое место</h3>
+        <form class="popup__form" name="new" novalidate>
+          <input type="text" name="name" class="popup__input popup__input_type_cardName" placeholder="Название" required
+            minlength="2" maxlength="30" />
+          <span name="error-name" class="error-message"></span>
+          <input type="url" name="link" class="popup__input popup__input_type_cardLink" placeholder="Ссылка на картинку"
+            required />
+          <span name="error-link" class="error-message"></span>
+          <button type="submit" class="popup__button button_inactive popup__button_big" disabled>+</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup-name">
+      <div class="popup__content">
+        <img src="./images/close.svg" alt="" class="popup__close popup__close_near" />
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form class="popup__form" name="nameForm" novalidate>
+          <input type="text" name="nameValue" class="popup__input popup__input_type_name" placeholder="Имя" required
+            minlength="2" maxlength="30" />
+          <span name="error-nameValue" class="error-message"></span>
+          <input type="text" name="profession" class="popup__input popup__input_type_profession" placeholder="Профессия"
+            required minlength="2" maxlength="30" />
+          <span name="error-profession" class="error-message"></span>
+          <button type="submit" class="popup__button button_active popup__button_small">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup-image">
+      <div class="popup__image-block">
+        <img src="./images/close.svg" alt="" class="popup__close popup__close_far" />
+        <img src="https://m.seonews.ru/upload/medialibrary/9e8/9e845f5be7ab2370a24c9c6a1fcf3436.jpg" alt=""
+          class="popup__image" />
+      </div>
+    </div>
+  </div>
+  <script src="blocks/initialCards.js"></script>
+  <script src="blocks/script.js"></script>
+</body>
+
+</html>

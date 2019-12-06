@@ -1,0 +1,16 @@
+.error_invalid {
+  display: block;
+  transition: 0.3s;
+  opacity: 1;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  margin-top: 5px;
+  position: absolute;
+}
+.error_invalid:first-of-type {
+  margin-top: -19px;
+}

@@ -1,0 +1,8 @@
+@import url(_far/popup__close_far.css);
+@import url(_near/popup__close_near.css);
+
+.popup__close {
+  width: 26px;
+  position: absolute;
+  cursor: pointer;
+}

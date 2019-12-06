@@ -1,0 +1,16 @@
+@import url(_small/button_small.css);
+@import url(_big/button_big.css);
+@import url(_active/button_active.css);
+@import url(_inactive/button_inactive.css);
+
+.button {
+  display: block;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+.button:focus {
+  outline-color: greenyellow;
+}
