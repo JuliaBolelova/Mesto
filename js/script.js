@@ -7,73 +7,8 @@ let allCards = Array.from(document.querySelectorAll(".place-card"));
 const cardForm = document.forms.new;
 const headerForm = document.forms.nameForm;
 
-//Классы
-class Card {
-    constructor() {
-        /* this.name = name;
-         this.link = link;
-         this.create(this.name, this.link);*/
-        console.log("Создаем карточку");
-    }
-
-    like(event) {
-        if (event.target.classList.contains("place-card__like-icon")) {
-            event.target.classList.toggle("place-card__like-icon_liked");
-        }
-    }
-
-    remove(event) {
-        if (event.target.classList.contains("place-card__delete-icon")) {
-            placesContainer.removeChild(event.target.closest(".place-card"));
-        }
-    }
-
-    create(name, link) {
-        return `<div class="place-card">
-                    <div class="place-card__image" style="background-image: url(${link})">
-                        <button class="place-card__delete-icon"></button>
-                    </div>
-                    <div class="place-card__description">
-                        <h3 class="place-card__name">${name}</h3>
-                        <button class="place-card__like-icon"></button>
-                    </div>
-                </div>`
-    }
-}
-
-class CardList {
-    constructor(placesContainer, cardTemplate) {
-        this.cardTemplate = cardTemplate;
-        this.placesContainer = placesContainer;
-    }
-
-    addCard(name, link) {
-        const card = this.cardTemplate.create(name, link);
-        this.placesContainer.insertAdjacentHTML('beforeend', card);
-    }
-
-    render(cards) {
-        cards.forEach(card => {
-            this.addCard(card.name, card.link);
-        });
-    }
-}
-
-class Popup {
-    constructor(/* аргументы*/) {
-
-    }
-
-    open() {
-
-    }
-
-    close() {
-
-    }
-}
-
-//Функция создания карточки
+//Функция создания карточки 
+/*
 function createCard(name, link) {
     return `<div class="place-card">
                 <div class="place-card__image" style="background-image: url(${link})">
@@ -92,7 +27,7 @@ function cardAdd(Arr) {
         allCards = Array.from(document.querySelectorAll(".place-card"));
     }
     return placesContainer;
-}
+} */
 
 //Функция открытия формы
 function openMenu(event) {
@@ -139,7 +74,7 @@ function getFields(event) {
 }
 
 //Функция на контейнер карточек
-function handler(event) {
+/*function handler(event) {
     //Функция удаления карточки
     function deleteCard(event) {
         placesContainer.removeChild(event.target.closest(".place-card"));
@@ -164,7 +99,7 @@ function handler(event) {
         case event.target.classList.contains("place-card__image"):
             return imageOpen(event);
     }
-}
+}*/
 
 //Функция заполнения карточки имени и профессии из разметки
 function headerAddingForm() {
@@ -262,10 +197,17 @@ function handleValidate(element) {
 }
 
 //Добавляем все карточки из массива
-cardAdd(initialCards);
+//cardAdd(initialCards);
+const card = new Card();
+const cardList = new CardList(document.querySelector(".places-list"), card);
+cardList.render(initialCards);
 
 //Обработчик общий
-placesContainer.addEventListener("click", handler);
+//placesContainer.addEventListener("click", handler);
+cardList.container.addEventListener("click", event => {
+    card.like(event);
+    card.remove(event);
+});
 
 //Открытие и закрытие форм
 addButton.addEventListener("click", openMenu);
@@ -274,8 +216,8 @@ allCards.forEach(element => element.addEventListener("click", openMenu));
 closeButton.forEach(element => element.addEventListener("click", closeMenu));
 
 //Добавляем карточку из формы или меняем заголовки
-cardForm.addEventListener("submit", getFields);
-headerForm.addEventListener("submit", changeForm);
+/*cardForm.addEventListener("submit", getFields);
+headerForm.addEventListener("submit", changeForm);*/
 
 //Валидация форм
 cardForm.elements.name.addEventListener("input", handleValidate);
