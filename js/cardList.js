@@ -1,4 +1,4 @@
-//Создание контейнера для карточек
+//Контейнер для карточек
 class CardList {
     constructor(placesContainer, cardTemplate) {
         this.cardTemplate = cardTemplate;

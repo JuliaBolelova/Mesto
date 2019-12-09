@@ -1,4 +1,4 @@
-//Создание шаблона карточки
+//Шаблон карточки
 class Card {
     constructor() {
         /* this.name = name;
@@ -15,7 +15,7 @@ class Card {
 
     remove(event) {
         if (event.target.classList.contains("place-card__delete-icon")) {
-            event.target.closest(".place-card").remove();
+            placesContainer.removeChild(event.target.closest(".place-card"));
         }
     }
 
