@@ -204,7 +204,7 @@ cardList.render(initialCards);
 
 //Обработчик общий
 //placesContainer.addEventListener("click", handler);
-cardList.container.addEventListener("click", event => {
+cardList.placesContainer.addEventListener("click", event => {
     card.like(event);
     card.remove(event);
 });
