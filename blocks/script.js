@@ -6,9 +6,9 @@ const placesContainer = document.querySelector(".places-list");
 let allCards = Array.from(document.querySelectorAll(".place-card"));
 const cardForm = document.forms.new;
 const headerForm = document.forms.nameForm;
+const submit = document.querySelectorAll("button[type='submit'");
 
-//Функция создания карточки 
-/*
+//Функция создания карточки
 function createCard(name, link) {
     return `<div class="place-card">
                 <div class="place-card__image" style="background-image: url(${link})">
@@ -27,7 +27,7 @@ function cardAdd(Arr) {
         allCards = Array.from(document.querySelectorAll(".place-card"));
     }
     return placesContainer;
-} */
+}
 
 //Функция открытия формы
 function openMenu(event) {
@@ -74,7 +74,7 @@ function getFields(event) {
 }
 
 //Функция на контейнер карточек
-/*function handler(event) {
+function handler(event) {
     //Функция удаления карточки
     function deleteCard(event) {
         placesContainer.removeChild(event.target.closest(".place-card"));
@@ -85,6 +85,7 @@ function getFields(event) {
     }
     //Функция открытия картинки
     function imageOpen(event) {
+        const root = document.querySelector(".root");
         const image = event.srcElement.style.backgroundImage.replace("url(\"", "").replace("\")", "");
         //Создаем карточку для просмотра фото
         const imagePicture = document.querySelector(".popup__image");
@@ -99,7 +100,7 @@ function getFields(event) {
         case event.target.classList.contains("place-card__image"):
             return imageOpen(event);
     }
-}*/
+}
 
 //Функция заполнения карточки имени и профессии из разметки
 function headerAddingForm() {
@@ -131,7 +132,10 @@ function changeButtonClass(event) {
             if (!elem.validity.valid)
                 isValidForm = false;
         }
-        else if (elem.type === "submit") {
+    });
+
+    inputs.forEach((elem) => {
+        if (elem.type === "submit") {
             if (isValidForm) {
                 elem.classList.add("button_active");
                 elem.classList.remove("button_inactive");
@@ -197,17 +201,10 @@ function handleValidate(element) {
 }
 
 //Добавляем все карточки из массива
-//cardAdd(initialCards);
-const card = new Card();
-const cardList = new CardList(document.querySelector(".places-list"), card);
-cardList.render(initialCards);
+cardAdd(initialCards);
 
 //Обработчик общий
-//placesContainer.addEventListener("click", handler);
-cardList.placesContainer.addEventListener("click", event => {
-    card.like(event);
-    card.remove(event);
-});
+placesContainer.addEventListener("click", handler);
 
 //Открытие и закрытие форм
 addButton.addEventListener("click", openMenu);
@@ -216,11 +213,76 @@ allCards.forEach(element => element.addEventListener("click", openMenu));
 closeButton.forEach(element => element.addEventListener("click", closeMenu));
 
 //Добавляем карточку из формы или меняем заголовки
-/*cardForm.addEventListener("submit", getFields);
-headerForm.addEventListener("submit", changeForm);*/
+cardForm.addEventListener("submit", getFields);
+headerForm.addEventListener("submit", changeForm);
 
 //Валидация форм
 cardForm.elements.name.addEventListener("input", handleValidate);
 cardForm.elements.link.addEventListener("input", handleValidate);
 headerForm.elements.nameValue.addEventListener("input", handleValidate);
 headerForm.elements.profession.addEventListener("input", handleValidate);
+
+/**
+ * Здравствуйте.
+ * Необходимо убрать обращение по индексу.inputs[2]
+ * При добавлении или удалении элементов всё перестанет работать
+ *
+ * Создание контейнера карточки необходимо вынести в отдельную функцию.
+ *
+ * функцию  handleValidate(element)  можно разбить на небольшиуе функции
+ *
+ *
+ * Можно лучше: обычно названия, для примера 'Должно быть от 2 до 30 символов'
+ * выносят в отдельный объект. Допустим может появится задача сделать многоязычный сайт
+ * Для примера : const lang = { validationLenght: 'Должно быть от 2 до 30 символов' }
+ *
+ * initialCards в отдельный файл, меньше строк, больше понимание,
+ * подключить его можно через  <script src="js/initialCards.js"></script>
+ *
+ * Про создание карточки.
+ * Вы можете реализовать функцию, которая сразу же возвращает “кусок” разметки. Это решает проблему постоянного криэйта DOM-элементов.
+       cardTemplate() {
+           return `<div class="place-card">
+                             Здесь вся ваша разметка карточки.
+                   </div>`
+       };
+ * Обратите внимание на использование backtick ` - это новый нововведение ES6, в нем можно корректно переносить строки и вставлять внутрь разметки JS-код.
+ * Конкретнее про вставку JS-кода. Сейчас вы используете способ стандарта ES5 - ' + card.link + ‘. Грузно, не правда ли?
+ * В ES6, используя ` бэктик, появляется возможность интерполяции `Строковое значение разметки ${console.log(‘А здесь уже JavaScript’)} `;
+ * Обладая данными знаниями, возникает идея оптимизации createCard - теперь эта функция по прежнему принимает card, содержащую нужные параметры, которые
+ * непосредственно вставляются в разметку.
+       cardTemplate(string) {
+           return `<div class="place-card">
+                             ${string}
+                   </div>`
+       };
+ *  Этот кусок разметки в дальнейшем можно вставить в DOM, воспользовавшись методом insertAdjacentHTML().
+ *  Однако такой способ вставки пользовательских строк является менее безопасным
+ *  https://developer.mozilla.org/ru/docs/Web/API/Element/insertAdjacentHTML
+ *
+ * 2. Путь оптимизации уже текущего кода с использованием documentFragment и уменьшении работы над DOM.
+ *     https://developer.mozilla.org/ru/docs/Web/API/DocumentFragment - здесь можно почитать о данном методе и его кейсах.
+ *     https://developer.mozilla.org/ru/docs/Web/HTML/Element/template - очень интересный тег, его также можно использовать для создание компонентов.
+ *
+ */
+
+
+/**
+ * Здравствуйте
+ * И вы всё ровно обращаетесь по интедексу
+ *
+       inputs[inputs.length-1].classList.add("button_active");
+       inputs[inputs.length-1].classList.remove("button_inactive");
+       inputs[inputs.length-1].removeAttribute("disabled");
+   } else {
+       inputs[inputs.length-1].classList.remove("button_active");
+       inputs[inputs.length-1].classList.add("button_inactive");
+       inputs[inputs.length-1].setAttribute("disabled", "");
+ *
+
+ * При добавлении или удалении элементов всё перестанет работать, надо исправить.
+ * Вы можете перебрать элементы, что вы и делаете выше
+ *
+ */
+
+ //
